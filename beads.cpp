@@ -11,50 +11,48 @@ using namespace std;
 
 int search(string beads,int length){
   int result = 0;
-  int new_result = 0;
-  
-  int next_head = -1;
-  int curpos = 0;
-  char curcolor = 'w';
-  bool tag = false;
 
-  while(curpos<length+length){
-    if(beads[curpos]==curcolor){
-      new_result ++;
-      curpos ++;
-    }
-    else{
-      if(beads[curpos]=='w'){
-	next_head = curpos;
-	new_result ++;
-	curpos++;
+  for(int next_head = 0; next_head<length; next_head++){
+    int curpos = next_head;
+    char curcolor = 'w';
+    bool tag = false;
+    int new_result = 0;
+
+    while(true){
+      if(curpos==length+next_head){
+	result = new_result;
+	break;
       }
       else{
-	if(curcolor=='w'){
-	  curcolor = beads[curpos];
+	if(beads[curpos%length]==curcolor){
 	  new_result ++;
-	  curpos++;
+	  curpos ++;
 	}
 	else{
-	  if(tag ==false){
-	    tag = true;
-	    curcolor = beads[curpos];
-	    new_result++;
+	  if(beads[curpos%length]=='w'){
+	    new_result ++;
 	    curpos ++;
 	  }
 	  else{
-	    tag = false;
-	    if(new_result>result){
-	      result = new_result;
-	    }
-	    new_result = 0;
-	    if(next_head>=0){
-	      curpos = next_head;
-	      curcolor = 'w';
-	      next_head = -1;
+	    if(curcolor=='w'){
+	      curcolor = beads[curpos%length];
+	      new_result ++;
+	      curpos++;
 	    }
 	    else{
-	      curpos++;
+	      if(tag ==false){
+		tag = true;
+		curcolor = beads[curpos%length];
+		new_result++;
+		curpos ++;
+	      }
+	      else{
+		tag = false;
+		if(new_result>result){
+		  result = new_result;
+		}
+		break;
+	      }
 	    }
 	  }
 	}
@@ -72,19 +70,9 @@ int main(){
   fin>>length;
   fin>>beads;
 
-  int sum = 0;
-  for(int i=0;i<length;i++){
-    int tmp = search(beads,length);
-    cout<<tmp<<endl;
-    if(tmp>sum)
-      sum = tmp;
-    string head = beads.substr(0,1);
-    string tail = beads.substr(1,length-1);
-    beads = head+tail;
-    cout<<beads<<endl;
-  }
+  fout<<search(beads,length)<<endl;
 
-  fout<<sum<<endl;
+
   return 0;
 }
 	
