@@ -25,7 +25,7 @@ int main(void){
       for(int j=0;j<=maxS;j++){
         if(sum[j]!=0 && tag[j]==0){
           tag[j+i]=1;
-          sum[j+i]++;
+          sum[j+i] += sum[j];
         }
       }
     }
