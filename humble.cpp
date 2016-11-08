@@ -6,10 +6,12 @@
 #include<iostream>
 #include<fstream>
 #include<algorithm>
+#include<climits>
+#define MAXV LONG_MAX
 using namespace std;
 
 
-unsigned long heap[100000]={0};
+unsigned long heap[1000000]={0};
 int hsize = 0;
 
 void push(unsigned long num){
@@ -87,7 +89,7 @@ unsigned long pop(){
       }
 
     }
-    // if(result>((1<<31)-1)
+    // if(result>=292500000)
     //   cout<<"pop: "<<result<<endl;
     return result;
   }
@@ -100,13 +102,14 @@ int main(){
   int K,N;
   fin>>K>>N;
 
-  unsigned long primes[100];
+  int primes[100];
   for(int i=0;i<K;i++){
     fin>>primes[i];
     push(primes[i]);
   }
 
-  unsigned long cur = 0,num=0,last=-1;
+  unsigned long cur = 0,num=0,last=0;
+  int maxsize=0;
   while(cur<N){
     num = pop();
     if(num==last)
@@ -115,12 +118,16 @@ int main(){
       last = num;
       cur++;
       for(int i=0;i<K;i++){
-        push(primes[i]*num);
+	unsigned long newn = primes[i]*num;
+	if(newn<MAXV)
+	  push(newn);
       }
     }
+    if(maxsize<hsize)
+      maxsize = hsize;
     //cout<<num<<' '<<cur<<endl;
   }
-  //cout<<num<<endl;
+  cout<<maxsize<<endl;
   fout<<num<<endl;
   return 0;
 }
