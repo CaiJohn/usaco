@@ -1,12 +1,97 @@
 /*
   ID: remijoh1
-  LANG: C++
+  LANG: C++11
   TASK: humble
 */
 #include<iostream>
 #include<fstream>
 #include<algorithm>
 using namespace std;
+
+
+unsigned long heap[100000]={0};
+int hsize = 0;
+
+void push(unsigned long num){
+  //cout<<"push: "<<num<<endl;
+  heap[hsize] = num;
+  int cur = hsize;
+  while(true){
+    if(cur==0)
+      break;
+    else{
+      int pindex = (cur-1)/2;
+      if(heap[pindex]<=heap[cur]){
+        break;
+      }
+      else{
+        unsigned long tmp = heap[cur];
+        heap[cur] = heap[pindex];
+        heap[pindex] = tmp;
+        cur = pindex;
+      }
+    }
+  }
+  hsize++;
+  return;
+}
+
+unsigned long pop(){
+  if(hsize<=0){
+    cout<<"error!"<<endl;
+    return -1;
+  }
+  else{
+    unsigned long result = heap[0];
+    heap[0] = heap[hsize-1];
+    hsize --;
+    
+    int cur = 0;
+    while(true){
+      if(cur>=hsize)
+        break;
+      if((cur*2+1)<hsize){
+        if(cur*2+2<hsize){
+          if(heap[cur]<=heap[cur*2+1] && heap[cur]<=heap[cur*2+2]){
+            break;
+          }
+          else{
+            unsigned long tmp;
+            if(heap[cur*2+1]<heap[cur*2+2]){
+              tmp = heap[cur*2+1];
+              heap[cur*2+1] = heap[cur];
+              heap[cur] = tmp;
+              cur = cur*2+1;
+            }
+            else{
+              tmp = heap[cur*2+2];
+              heap[cur*2+2] = heap[cur];
+              heap[cur] = tmp;
+              cur = cur*2+2;
+            }
+          }
+        }
+        else{
+          if(heap[cur]<=heap[cur*2+1])
+            break;
+          else{
+            unsigned long tmp = heap[cur*2+1];
+            heap[cur*2+1] = heap[cur];
+            heap[cur] = tmp;
+            cur = cur*2+1;
+          }
+        }
+      }
+      else{
+        break;
+      }
+
+    }
+    // if(result>((1<<31)-1)
+    //   cout<<"pop: "<<result<<endl;
+    return result;
+  }
+}
 
 int main(){
   ifstream fin("humble.in");
@@ -15,45 +100,27 @@ int main(){
   int K,N;
   fin>>K>>N;
 
-  long primes[100];
+  unsigned long primes[100];
   for(int i=0;i<K;i++){
     fin>>primes[i];
+    push(primes[i]);
   }
 
-  
-  int num[1000000];
-  for(int i=0;i<K;i++)
-    num[i] = primes[i];
-  
-  int count = K;
-  while(){
-    
-  }
-  for(int i=0;i<N;i++){
-    for(int j=0;j<K;j++){
-      num[count++] = num[i]*primes[j];
-      //cout<<num[count-1]<<endl;
-    }
-  }
-  sort(num,num+count);
-  for(int i=0;i<count;i++)
-    cout<<num[i]<<endl;
-  
-  int cur = 0,p=0;
-  int last = -1;
-  while(true){
-    cout<<p<<' '<<cur<<endl;
-    if(cur==N)
-      break;
-    if(num[p] == last){
-      p++;
-    }
+  unsigned long cur = 0,num=0,last=-1;
+  while(cur<N){
+    num = pop();
+    if(num==last)
+      continue;
     else{
-      last = num[p];
-      p++;
+      last = num;
       cur++;
+      for(int i=0;i<K;i++){
+        push(primes[i]*num);
+      }
     }
+    //cout<<num<<' '<<cur<<endl;
   }
-  fout<<num[p]<<endl;
+  //cout<<num<<endl;
+  fout<<num<<endl;
   return 0;
 }
