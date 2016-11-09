@@ -11,12 +11,12 @@ using namespace std;
 int K,N;
 int stamps[51],stat[MAXV]={0};
 
-bool check(int M,int N,int K){
+int check(int M,int N,int K){
   
-  if(M>=200)
-    return false;
-  //bool state[200][51][201]={false};
-  bool state[200][51][2]={false};
+  if(M>=20000)
+    return 0;
+  // bool state[200][51][201]={false};
+  bool state[20000][51][2]={false};
   
   // for(int n=0;n<=N;n++){
   //   for(int k=0;k<=K;k++){
@@ -24,13 +24,12 @@ bool check(int M,int N,int K){
   //   }
   // }
   for(int n=0;n<=N;n++){
-    for(int k=0;k<=2;k++){
+    for(int k=0;k<2;k++){
       state[0][n][k] = true;
     }
   }
-  
-  // for(int m=1;m<=M;m++){
-  //   for(int k=1;k<=K;k++){
+  // for(int k=1;k<=K;k++){
+  //   for(int m=1;m<=M;m++){
   //     for(int n=N-1;n>=0;n--){
   //       bool m1;
   //       if(m-stamps[n]<0)
@@ -42,11 +41,12 @@ bool check(int M,int N,int K){
   //     }
   //   }
   // }
-  int cur = 1;
-  for(int m=1;m<=M;m++){
-    cur = 1;
-    cout<<m<<endl;
-    for(int k=1;k<=K;k++){
+  // return state[M][0][K];
+  int cur = 0;
+  for(int k=1;k<=K;k++){
+    cur = 1 - cur;
+    for(int m=1;m<=M;m++){
+      //cout<<m<<endl;
       for(int n=N-1;n>=0;n--){
         bool m1,k1;
         if(m-stamps[n]<0)
@@ -54,14 +54,25 @@ bool check(int M,int N,int K){
         else
           m1 = state[m-stamps[n]][n][(cur+1)%2];        
         state[m][n][cur] = (m1 || state[m][n+1][cur] || state[m][n][(cur+1)%2]);
-        cout<<m<<' '<<n<<' '<<k<<' '<<cur<<' '<<state[m][n][cur]<<endl;
+        // if(m==M && state[m][n][cur]==true)
+        //   return true;
+        //cout<<m<<' '<<n<<' '<<k<<' '<<cur<<' '<<state[m][n][cur]<<endl;
       }
+      
       //cout<<"end of n"<<endl;
-      cur = 1 - cur;
+      
     }
-    cout<<"end of k, and m is "<<m<<endl;    
+    //cout<<"end of k, and m is "<<m<<endl;
+    
   }
-  return state[M][0][cur];
+  int count = 0;
+  for(int i=1;i<=M;i++){
+    if(state[i][0][cur]==false)
+      break;
+    count++;
+  }
+  //return state[M][0][cur];
+  return count;
 }
 int main(){
   ifstream fin("stamps.in");
@@ -72,11 +83,13 @@ int main(){
     fin>>stamps[i];
   }
 
-  int count = 0;
-  while(check(count+1,N,K)){
-    count++;
-  }
-  fout<<count<<endl;
+  int count = 1;
+  int reuslt = -1;
+  // while(check(count*1000,N,K)){
+  //   count++;
+  // }
+  fout<<check(10000,N,K)<<endl;
+  //fout<<count<<endl;
   // for(int i=1;i<20;i++){
   //   cout<<i<<' '<<check(i,N,K)<<endl;
   // }
