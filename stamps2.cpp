@@ -13,10 +13,20 @@ int stamps[51],stat[MAXV]={0};
 
 int check(int M,int N,int K){
   
-  if(M>=20000)
+  if(M>=700000)
     return 0;
+  int msize = 700000,nsize = 51,ksize = 201;
   // bool state[200][51][201]={false};
-  bool state[20000][51][2]={false};
+
+  bool ***state = new bool** [M];
+  for(int i=0;i<M;i++){
+    state[i] = new bool* [N];
+    for(int j=0;j<N;j++){
+      state[i][j] = new bool [2]();
+    }
+  }
+
+  //bool state[700000][51][2]={false};
   
   // for(int n=0;n<=N;n++){
   //   for(int k=0;k<=K;k++){
@@ -88,7 +98,7 @@ int main(){
   // while(check(count*1000,N,K)){
   //   count++;
   // }
-  fout<<check(10000,N,K)<<endl;
+  fout<<check(699999,N,K)<<endl;
   //fout<<count<<endl;
   // for(int i=1;i<20;i++){
   //   cout<<i<<' '<<check(i,N,K)<<endl;
