@@ -50,6 +50,8 @@ int main(){
   for(num=0;num<=maxV;num++){
     if(calc(num)<=L)
       count++;
+    // else
+    //   cout<<num<<endl;
     if(count==I)
       break;
   }

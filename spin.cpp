@@ -15,17 +15,21 @@ bool solve(int wedges[][5][2],int cur,int ans[]){
     for(int i=0;i<wnum[cur];i++){
       if(cur==0){
 	ans[0] = wedges[cur][i][0];
-	ans[1] = wedges[cur][i][0]+wedges[cur][i][1];
+	ans[1] = (wedges[cur][i][0]+wedges[cur][i][1])%360;
 	if(solve(wedges,cur+1,ans))
 	  return true;
       }
       else{
 	int range[2]={0};
 	range[0] = wedges[cur][i][0];
-	range[1] = wedges[cur][i][0]+wedges[cur][i][1];
+	range[1] = (wedges[cur][i][0]+wedges[cur][i][1])%360;
 	if(range[1]<ans[0]||range[0]>ans[1])
 	  continue;
 	else{
+          if(ans[0]>ans[1] && range[0]<range[1]){
+            if(
+          }
+            
 	  ans[0] = ans[0]>range[0]?ans[0]:range[0];
 	  ans[1] = ans[1]<range[1]?ans[1]:range[1];
 	  if(solve(wedges,cur+1,ans)){
@@ -56,7 +60,7 @@ int main(){
   while(true){
     if(solve(wedges,0,ans)){
       fout<<time<<endl;
-      return 0;
+      break;
     }      
     for(int i=0;i<5;i++){
       pos[i] = (pos[i]+speed[i])%360;
@@ -64,8 +68,15 @@ int main(){
 	wedges[i][j][0] = (wedges[i][j][0]+speed[i])%360;
       }
     }
-    
+    time++;
+    // Judge whether the same state has happened
+    if(pos[0]==0 && pos[1]==0 && pos[2]==0 && pos[3]==0 && pos[4]==0){
+      fout<<"none"<<endl;
+      break;
+    }
   }
+  return 0;
+}
 
   
   
