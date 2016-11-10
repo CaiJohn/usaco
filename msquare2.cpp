@@ -137,57 +137,44 @@ int main(){
   ofstream fout("msquare.out");
 
   int target[8];
-
-  ifstream fin1("msquare-test.out");
-  for(int line=0;line<40320;line++){
-    for(int i=0;i<8;i++)
-      fin1>>target[i];
-    for(int i=0;i<HASHV;i++)
-      hashtbl[i] = NULL;
-    head = 0;
-    tail = 0;
+  for(int i=0;i<8;i++)
+    fin>>target[i];
+  for(int i=0;i<HASHV;i++)
+    hashtbl[i] = NULL;
   
-    string cur="";
-    int init[8] = {1,2,3,4,5,6,7,8};
-    push(init,cur);
-    while(head<tail){
-      node tmp = pop();
-      bool tag = true;
-      for(int i=0;i<8;i++){
-        if(tmp.state[i]!=target[i]){
-          tag = false;
-          break;
-        }
+  string cur="";
+  int init[8] = {1,2,3,4,5,6,7,8};
+  push(init,cur);
+  while(head<tail){
+    node tmp = pop();
+    bool tag = true;
+    for(int i=0;i<8;i++){
+      if(tmp.state[i]!=target[i]){
+	tag = false;
+	break;
       }
-      if(tag==true){
-        //fout<<tmp.sequece.length()<<endl;
-        if(tmp.sequece.length()>60){
-          cout<<tmp.sequece.length()<<endl;
-          for(int i=0;i<8;i++)
-            cout<<target[i];
-          cout<<endl;
-        }
-              
-        //checkanswer(tmp.sequece,init);
-        // int l = tmp.sequece.length();
-        // for(int i=0;i<l;i++){
-        //   fout<<(char)(tmp.sequece[i]-'0'+'A');
-        //   if(i>0 && i%60==0)
-        //     fout<<endl;
-        // }
-        //return 0;
-        break;
+    }
+    if(tag==true){
+      fout<<tmp.sequece.length()<<endl;
+      //checkanswer(tmp.sequece,init);
+      int l = tmp.sequece.length();
+      for(int i=0;i<l;i++){
+        if(i>0 && i%60==0)
+          fout<<endl;
+        fout<<(char)(tmp.sequece[i]-'0'+'A');
       }
-      else{
-        for(int i=0;i<3;i++){
-          int nstate[8];
-          transform(tmp.state,i,nstate);        
-          if(!find(nstate)){
-            string nseq = tmp.sequece;
-            nseq.insert(nseq.end(),i+'0');
-            insert(nstate);
-            push(nstate,nseq);
-          }
+      fout<<endl;
+      return 0;
+    }
+    else{
+      for(int i=0;i<3;i++){
+        int nstate[8];
+        transform(tmp.state,i,nstate);        
+        if(!find(nstate)){
+          string nseq = tmp.sequece;
+          nseq.insert(nseq.end(),i+'0');
+          insert(nstate);
+          push(nstate,nseq);
         }
       }
     }
