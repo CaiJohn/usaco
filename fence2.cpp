@@ -11,7 +11,7 @@ struct edge{
   int id;
   edge* next;
 };
-
+edge* edgetable[501];
 edge* insert(edge* head,edge* e){
   if(head==NULL){
     return e;
@@ -40,7 +40,6 @@ edge* del(edge* head, int v){
     }
     else{
       if(head->id==v){
-        
 	edge* tmp = head->next;
 	delete head;
 	return tmp;
@@ -53,11 +52,24 @@ edge* del(edge* head, int v){
   }
 }
 
+void solve(int cur,int ans[],int &l){
+  while(edgetable[cur]!=NULL){
+    int next = edgetable[cur]->id;
+    edgetable[cur] = del(edgetable[cur],next);
+    edgetable[next] = del(edgetable[next],cur);
+    solve(next,ans,l);
+  }
+  ans[l] = cur;
+  l++;
+  return;
+}
+
+
 int main(){
   ifstream fin("fence.in");
   ofstream fout("fence.out");
   int F;
-  edge* edgetable[501];
+  
   for(int i=0;i<=500;i++)
     edgetable[i] = NULL;
   fin>>F;
@@ -111,52 +123,11 @@ int main(){
     }
   }
   //cout<<start<<endl;
-  
-  int pos = start;
-  for(int i=0;i<F;i++){
-    //cout<<"!!!"<<i<<endl;
-    fout<<pos<<endl;
-    edge* cur = edgetable[pos];
-    while(true){
-      if(cur==NULL){
-        cout<<"error!"<<endl;
-        return 0;
-      }
-      else{
-        if(degree[cur->id]>=2){          
-          break;
-        }
-        else{
-          cout<<i<<' '<<cur->id<<endl;
-          if(i==F-1){
-            break;
-          }
-          else{
-            cur = cur->next;
-          }
-          
-        } 
-      }      
-    }
-    int next = cur->id;
-    degree[pos]--;
-    degree[next]--;
-    edgetable[pos] = del(edgetable[pos],next);
-    edgetable[next] = del(edgetable[next],pos);
-    
-    // for(int i=0;i<501;i++){
-    //   if(edgetable[i]!=NULL){
-    //     edge* cur = edgetable[i];
-    //     cout<<"v"<<i<<endl;
-    //     while(cur!=NULL){
-    //       cout<<cur->id<<' ';
-    //       cur = cur->next;
-    //     }
-    //     cout<<endl;
-    //   }
-    // }
-    pos = next;
+  int ans[1025],l=0;
+  solve(start,ans,l);
+  for(int i=l-1;i>=0;i--){
+    fout<<ans[i]<<endl;
   }
-  fout<<pos<<endl;
+  
   return 0;
 }
