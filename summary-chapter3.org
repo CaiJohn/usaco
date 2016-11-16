@@ -1,0 +1,35 @@
+* 3.1
+** Agri-net
+   - Minimum spanning tree, from the keywords: "minimize cost",
+     "farm must connect to some other farm"
+** Score inflation
+   - DP, knapsack problem
+   - But what is the overlapping part?
+   - Compress space for states
+** Contact
+* 3.2
+** Factorials
+   - ?
+** Stringsobits
+   - ?
+** Spinning Wheels
+   - Simulation
+   - Determine whether a pattern has searched before
+   - Accuracy in implementation
+** Feed Ratios
+** Magic Squares
+   - BFS
+** Sweet Butter
+   - Shortest path, sparse graph
+
+* Methods
+* TODO
+  - MST: two algorithms
+  - disjoint set
+
+* MST
+  - Generic algorithm: maintain part of the MST
+  - 1 theorem: light edge
+  - Kruskal: forest to tree. 1. Disjoint set; 2. sort edge
+  - The data structure for graph? Only the set of edges will be enough
+  - matroid
