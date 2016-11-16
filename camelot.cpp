@@ -34,7 +34,7 @@ int walk(int r, int c,triple output[]){
 }
 
 void bfs(int r,int c,int output[][MAXC]){
-  cout<<(bfscount++)<<endl;
+  // cout<<(bfscount++)<<endl;
   for(int m=0;m<R;m++){
     for(int n=0;n<C;n++){
       output[m][n] = MAXDIST;
@@ -100,37 +100,62 @@ int main(){
   // }
   
   bool calc[MAXR][MAXC] = {false}, visited[MAXR][MAXC]={false};
-  int minDist = MAXDIST,dist[MAXR][MAXC][MAXR][MAXC]={0};
+  int minDist = MAXDIST,dist[MAXR][MAXC][MAXR][MAXC]={0},summap[MAXR][MAXC][kcount]={0},sum[MAXR][MAXC]={0};
   int direct[8][2] = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
-
+  
   if(kcount==0){
     fout<<0<<endl;
     return 0;
   }
+
+  for(int m=0;m<R;m++){
+    for(int n=0;n<C;n++){
+      for(int k=0;k<kcount;k++){
+        if(calc[knight[k][0]][knight[k][1]]==false){
+          bfs(knight[k][0],knight[k][1],dist[knight[k][0]][knight[k][1]]);
+          calc[knight[k][0]][knight[k][1]]=true;
+        }
+        sum[m][n] += dist[knight[k][0]][knight[k][1]][m][n];        
+      }
+    }
+  }
+  
+  
+  for(int k=0;k<kcount;k++){    
+    for(int m=0;m<R;m++){
+      for(int n=0;n<C;n++){
+        summap[m][n][k] = sum[m][n]-dist[knight[k][0]][knight[k][1]][m][n];
+      }
+    }
+  }
+  
+  
   queue<triple> q;
   triple curking;
   curking.dist = 0;
   curking.r = king[0];
   curking.c = king[1];
   visited[king[0]][king[1]]=true;
+  // cout<<"push "<<curking.r<<' '<<curking.c<<' '<<curking.dist<<endl;
   q.push(curking);
   while(!q.empty()){
     curking = q.front();
-    cout<<"pick up king at "<<curking.r<<' '<<curking.c<<' '<<curking.dist<<endl;
+    // cout<<"pick up king at "<<curking.r<<' '<<curking.c<<' '<<curking.dist<<endl;
     q.pop();
-    if(curking.dist>=3){
+    if(curking.dist>=5){
       fout<<minDist<<endl;
       return 0;
     }
    
     for(int i=0;i<8;i++){
-      int newr = curking.r+direct[i][0],newc = curking.r+direct[i][1];
+      int newr = curking.r+direct[i][0],newc = curking.c+direct[i][1];
       if(newr>=0 && newr<R && newc>=0 && newc<C && visited[newr][newc] == false){
         visited[newr][newc] = true;
         triple tmp;
         tmp.r = newr;
         tmp.c = newc;
         tmp.dist = curking.dist + 1;
+        // cout<<"push "<<tmp.r<<' '<<tmp.c<<' '<<tmp.dist<<endl;
         q.push(tmp);
       }
     }
@@ -147,30 +172,39 @@ int main(){
         continue;
       else{
         int minmap[MAXR][MAXC]={0};
-        for(int j=0;j<kcount;j++){
-          if(j==i){
-            if(calc[curking.r][curking.c]==false){
-              bfs(curking.r,curking.c,dist[curking.r][curking.c]);
-              calc[curking.r][curking.c]=true;
-            }
-            for(int m=0;m<R;m++){
-              for(int n=0;n<C;n++){
-                minmap[m][n] += dist[curking.r][curking.c][m][n];
-              }
-            }
-          }
-          else{
-            if(calc[knight[j][0]][knight[j][1]]==false){
-              bfs(knight[j][0],knight[j][1],dist[knight[j][0]][knight[j][1]]);
-              calc[knight[j][0]][knight[j][1]]=true;
-            }
-            for(int m=0;m<R;m++){
-              for(int n=0;n<C;n++){
-                minmap[m][n] += dist[knight[j][0]][knight[j][1]][m][n];
-              }
-            }
+        if(calc[curking.r][curking.c]==false){
+          bfs(curking.r,curking.c,dist[curking.r][curking.c]);
+          calc[curking.r][curking.c]=true;
+        }
+        for(int m=0;m<R;m++){
+          for(int n=0;n<C;n++){
+            minmap[m][n] += dist[curking.r][curking.c][m][n] + summap[m][n][i];
           }
         }
+        // for(int j=0;j<kcount;j++){
+        //   if(j==i){
+        //     if(calc[curking.r][curking.c]==false){
+        //       bfs(curking.r,curking.c,dist[curking.r][curking.c]);
+        //       calc[curking.r][curking.c]=true;
+        //     }
+        //     for(int m=0;m<R;m++){
+        //       for(int n=0;n<C;n++){
+        //         minmap[m][n] += dist[curking.r][curking.c][m][n];
+        //       }
+        //     }
+        //   }
+        //   else{
+        //     if(calc[knight[j][0]][knight[j][1]]==false){
+        //       bfs(knight[j][0],knight[j][1],dist[knight[j][0]][knight[j][1]]);
+        //       calc[knight[j][0]][knight[j][1]]=true;
+        //     }
+        //     for(int m=0;m<R;m++){
+        //       for(int n=0;n<C;n++){
+        //         minmap[m][n] += dist[knight[j][0]][knight[j][1]][m][n];
+        //       }
+        //     }
+        //   }
+        // }
         // cout<<"minmap"<<endl;
         for(int m=0;m<R;m++){
           for(int n=0;n<C;n++){
@@ -180,6 +214,7 @@ int main(){
           }
           //cout<<endl;
         }
+        // cout<<minDist<<endl;
       }      
     }
   }
