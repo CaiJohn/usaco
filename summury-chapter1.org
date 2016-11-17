@@ -21,3 +21,7 @@
      palindromes
 ** SuperPrime Rib
    - Recursion
+
+* 3.1
+  humble: algorithm not so correct yet...
+  contact: practice the printing again!!!!!

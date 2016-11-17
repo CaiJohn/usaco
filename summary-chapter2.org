@@ -1,0 +1,10 @@
+* 2.1
+** The castle 漫水算法
+** ordered fraction 重新看一遍
+** sorting a three-value sequence 贪心吧？每一步都不要吃亏
+** healthy holsteins 搜索？重新看
+
+还没做出来。。。
+party lambs
+Bessie come home
+* fact4 虽然过了，但是还没有想得很透彻。。。
