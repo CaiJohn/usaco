@@ -1,7 +1,6 @@
 * 1.3
 ** Mixing Milk
    - Greedy
-**
 * 1.4
 ** Arithmetic Progressions                                       :ATTENTION!:
    - Not understanding the problem at the beginning
