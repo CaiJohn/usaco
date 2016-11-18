@@ -42,8 +42,18 @@
    - Use a hash table to check whether a state has been put into the queue
    - Cantor expansion! Or use base 8 number...
 ** Sweet Butter
+   - Find a point in the graph to minimize the distance sum
+   of some other points to this point
    - Shortest path, sparse graph
-
+   - Floyd costs N^3, when N==800, it is too slow.
+     It can be observed that only 1450 edges, and only
+     some part of the points are required. Use Dijkstra with a heap.
+* 3.3
+** Riding the fences
+   - Eulerian tours
+** Shopping offers
+   - DP
+   - Shortest path!
 * Methods
   - Focus on the problem itself! Don't be limited by the method used.(kimbits)
   - When it is BFS, always think what is the biggest queue possible; how to
@@ -54,7 +64,7 @@
   - printing: contact,
   - DP: inflate(further compress space), stamps, stringsobits
   - Cantor expansion!
-
+  - Dijkstra with heap
 * MST
   - Generic algorithm: maintain part of the MST
   - 1 theorem: light edge
