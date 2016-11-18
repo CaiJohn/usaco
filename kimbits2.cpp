@@ -89,7 +89,7 @@ int main(){
     cur = to_num(next(cur,N,L));
     I++;
   }
-  fout<<to_binary(I-1,N)<<endl;
+  cout<<to_binary(I-1,N)<<endl;
   
 
   // int maxV = 0,maxB=N-1;

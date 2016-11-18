@@ -1,31 +1,59 @@
+* TODO https://www.byvoid.com/blog/usaco-325-magic-squares
+  See Cantor, Hash...
+
+
 * 3.1
 ** Agri-net
    - Minimum spanning tree, from the keywords: "minimize cost",
      "farm must connect to some other farm"
-** Score inflation
-   - DP, knapsack problem
-   - But what is the overlapping part?
-   - Compress space for states
+** TODO Score inflation
+   - DP, unbounded knapsack problem
+   - Compress space for states. It can be further reduced to an 1d array
+** TODO Humble number
 ** Contact
+   - for each length, search the sequence, sum up the number
+     of all the patterns
+   - The key point is to encode the pattern as an integer.
+     To distinguish '00' and '000', we can make them as '100' and '1000'
+   - The output printing
+** Stamps
+   - DP. Like another way of knapsack problem
+   - Convert the problem to a DP problem: the value V can be constructed
+     if and only if it requires <=K numbers of stamps
 * 3.2
 ** Factorials
    - ?
 ** Stringsobits
-   - ?
+   - The key is to realize that a sequence aa...a can be divided
+     by the first bit, and those with 1 in the first bit is strictly
+     greater than those with 0 in the first bit.
+     [N,L,I] = if I>=len[N-1][L] then '0'+[N-1,L,I] else '1'+[N-1,L-1,I-len[N-1][L]
+   - len[N][L] is the number of strings with N bits and at most L 1's.
+     This can be calculated by DP. But do not be trapped by the idea of using DP,
+     focus on the problem itself!
 ** Spinning Wheels
    - Simulation
    - Determine whether a pattern has searched before
-   - Accuracy in implementation
+   - Require accuracy in implementation
 ** Feed Ratios
+   - Search. By enumerating the sum increasingly, get the smallest sum first
 ** Magic Squares
-   - BFS
+   - BFS, the number of all states is 8!
+   - Use a hash table to check whether a state has been put into the queue
+   - Cantor expansion! Or use base 8 number...
 ** Sweet Butter
    - Shortest path, sparse graph
 
 * Methods
+  - Focus on the problem itself! Don't be limited by the method used.(kimbits)
+  - When it is BFS, always think what is the biggest queue possible; how to
+    determine a state has been checked
 * TODO
   - MST: two algorithms
   - disjoint set
+  - printing: contact,
+  - DP: inflate(further compress space), stamps, stringsobits
+  - Cantor expansion!
 
 * MST
   - Generic algorithm: maintain part of the MST
