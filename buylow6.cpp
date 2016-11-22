@@ -80,9 +80,16 @@ int minus_(int num1[],int l1,int num2[],int l2){ // num1>=num2
       }
     }
     else{
-      sum = num1[i]-e;
-      e=0;
+      if(num1[i]-e>=0){
+        sum = num1[i]-e;
+        e=0;
+      }
+      else{
+        sum = num1[i]+10-e;
+        e=1;
+      }
     }
+    
     num1[i] = sum;
   }
   while(true){
@@ -90,6 +97,7 @@ int minus_(int num1[],int l1,int num2[],int l2){ // num1>=num2
       break;
     l1--;
   }
+  //cout<<"l1 "<<l1<<endl;
   return l1;
 }
 
@@ -146,27 +154,33 @@ void sub(BigInt* num1, BigInt num2){
 
 int main(){
 
-  int input1[100] = {1,2,3,4,5,6,7,8,9};
-  int input2[100] = {1,2,3,4,5,6,7,8};
-  BigInt test1,test2;
-  test1.len = 9;
-  test1.s = 1;
-  test2.len = 8;
-  test2.s = 1;
+  // int input1[100] = {1,2,3,4,5,6,7,8,9};
+  // int input2[100] = {1,2,3,4,5,6,7,8};
+  // BigInt test1,test2;
+  // test1.len = 9;
+  // test1.s = 1;
+  // test2.len = 8;
+  // test2.s = 1;
 
-  for(int i=0;i<test1.len;i++){
-    test1.num[i] = input1[i];
-  }
-  for(int i=0;i<test2.len;i++){
-    test2.num[i] = input2[i];
-  }
+  // for(int i=0;i<test1.len;i++){
+  //   test1.num[i] = input1[i];
+  // }
+  // for(int i=0;i<test2.len;i++){
+  //   test2.num[i] = input2[i];
+  // }
 
-  cout<<printBigInt(test1)<<' '<<printBigInt(test2)<<endl;
-  plus_(&test1,test2);
-  cout<<printBigInt(test1)<<endl;
-  sub(&test1,test2);
-  cout<<printBigInt(test1)<<endl;
-  return 0;
+  // cout<<printBigInt(test1)<<' '<<printBigInt(test2)<<endl;
+  // plus_(&test1,test2);
+  // cout<<printBigInt(test1)<<endl;
+  // sub(&test1,test2);
+  // cout<<printBigInt(test1)<<endl;
+  // sub(&test2,test1);
+  // cout<<printBigInt(test2)<<endl;
+  // plus_(&test1,test2);
+  // cout<<printBigInt(test1)<<endl;
+  // plus_(&test1,test2);
+  // cout<<printBigInt(test1)<<endl;
+  // return 0;
   ifstream fin("buylow.in");
   ofstream fout("buylow.out");
 
@@ -223,7 +237,7 @@ int main(){
     else{
       if(state[i]==result){
 	//snum+=count[i];
-	
+        plus_(&snum,count[i]);
       }
     }    
   }
