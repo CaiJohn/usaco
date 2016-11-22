@@ -7,4 +7,23 @@
 还没做出来。。。
 party lambs
 Bessie come home
+* 2.4
+** The Tamworth Two
+   - Simulation
+   - The graph is small. It is possible to track all the searched states.
+** Overfencing
+   - Dijkstra
+** Cow Tours
+   - Floyd
+   - Understand the problem first!
+** Bessie Come Home
+   - Dijkstra
+   - The number of vertex is small
+** Fractions to Decimals
+   - Practice the way of thinking
+   - Output print format
 * fact4 虽然过了，但是还没有想得很透彻。。。
+
+* method
+** Use examples, simple examples to guide you thinking
+** Refine the idea
