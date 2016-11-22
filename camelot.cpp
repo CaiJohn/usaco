@@ -100,7 +100,7 @@ int main(){
   // }
   
   bool calc[MAXR][MAXC] = {false}, visited[MAXR][MAXC]={false};
-  int minDist = MAXDIST,dist[MAXR][MAXC][MAXR][MAXC]={0},summap[MAXR][MAXC][kcount]={0},sum[MAXR][MAXC]={0};
+  int minDist = MAXDIST,dist[MAXR][MAXC][MAXR][MAXC]={0},summap[MAXR][MAXC][MAXR*MAXC]={0},sum[MAXR][MAXC]={0};
   int direct[8][2] = {{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
   
   if(kcount==0){
@@ -142,10 +142,10 @@ int main(){
     curking = q.front();
     // cout<<"pick up king at "<<curking.r<<' '<<curking.c<<' '<<curking.dist<<endl;
     q.pop();
-    if(curking.dist>=5){
-      fout<<minDist<<endl;
-      return 0;
-    }
+    // if(curking.dist>=5){
+    //   fout<<minDist<<endl;
+    //   return 0;
+    // }
    
     for(int i=0;i<8;i++){
       int newr = curking.r+direct[i][0],newc = curking.c+direct[i][1];

@@ -1,6 +1,8 @@
-
-// Camelot
-// Hal Burch
+/*
+  ID: remijoh1
+  LANG: C++11
+  TASK: camelot
+*/
 
 // This is a modification of the shortest path algorithm. If there was no king, then the shortest path algorithm can determine the distance that each knight must travel to get to each square. Thus, the cost of gathering in a particular square is simply the sum of the distance that each knight must travel, which is fairly simple to calculate.
 
@@ -200,5 +202,3 @@ int main(int argc, char **argv) {
   fprintf (fout, "%i\n", pc);
   return 0;
 }
-
-USACO Gateway | Comment or Question

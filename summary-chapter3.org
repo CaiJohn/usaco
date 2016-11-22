@@ -1,6 +1,6 @@
 * TODO https://www.byvoid.com/blog/usaco-325-magic-squares
   See Cantor, Hash...
-
+  Different ways to store a graph
 
 * 3.1
 ** Agri-net
@@ -54,6 +54,23 @@
 ** Shopping offers
    - DP
    - Shortest path!
+** Camelot
+   - BFS, require good understanding of the problem
+** Home on the Range
+   - Calculate the biggest square size with each point as the left-up-most point
+   - Think about how the result of a point can be calculated by others
+** A Game
+   - DP
+   - Crack the problem from small cases!!
+* 3.4
+** American Heritage
+   - Understand traversal of trees
+** Electric Fence
+   - When going along x axis does not work, try y axis!
+** Raucous Rockers
+   - DP
+   - It can also be handled by searching
+     
 * Methods
   - Focus on the problem itself! Don't be limited by the method used.(kimbits)
   - When it is BFS, always think what is the biggest queue possible; how to
@@ -71,3 +88,6 @@
   - Kruskal: forest to tree. 1. Disjoint set; 2. sort edge
   - The data structure for graph? Only the set of edges will be enough
   - matroid
+* notes
+  - [[file:notes/shortest-path.org][shortest path]]
+  - 

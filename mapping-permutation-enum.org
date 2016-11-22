@@ -1,0 +1,12 @@
+* Mapping between permutation and natural numbers
+** Cantor expansion
+   - Length N permutation, mapping to a number indicating the position of the permutation
+     in all the permutations
+   - 35142
+     2*4!+3*3!+0*2!+1*1!+0*0!
+     Calculate how many permutation before
+* Mapping between enumeration and natural numbers
+** Binary
+   - Choose K from N, k=0,1,...N
+     Start from 0, ends at (1<<N)-1
+
