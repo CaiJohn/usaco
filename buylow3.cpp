@@ -18,14 +18,14 @@ struct Node{
   Tree* t;
   Node* next;
 };
-int count = 0;
+int countn = 0;
 
 // If root is not a pointer, can I perform the insertion?
-bool insert(Tree* root,int v){
+bool insert(Tree* root,Tree* newn){
   // cout<<"insert "<<root->v<<' '<<v<<endl;
-  if(root->v == v)
+  if(root->v == newn->v)
     return true;
-  if(root->v > v)
+  if(root->v > newn->v)
     return false;  
   // root-> v < v
   Node* child = root->child;
@@ -34,18 +34,15 @@ bool insert(Tree* root,int v){
     if(child==NULL)
       break;
     else{
-      tag = insert(child->t,v) || tag;
+      tag = insert(child->t,newn) || tag;
       child = child->next;
     }
   }
   if(tag == false){
-    // cout<<"make new "<<v<<' '<<count<<endl;
-    count++;
-    Tree* nt = new Tree();
-    nt->v = v;
-    nt->child = NULL;
+    // countn++;
+    // cout<<countn<<endl;
     Node* nn = new Node();
-    nn->t = nt;
+    nn->t = newn;
     nn->next = NULL;
     if(root->child==NULL){
       root->child = nn;
@@ -116,9 +113,11 @@ int main(){
   root->child = NULL;
 
   for(int i=N-1;i>=0;i--){
-    // cout<<i<<' '<<seq[i]<<endl;
-    
-    insert(root,seq[i]);
+    cout<<i<<' '<<seq[i]<<endl;
+    Tree* nt = new Tree();
+    nt->v = seq[i];
+    nt->child = NULL;
+    insert(root,nt);
   }
   // printTree(root);
   // cout<<endl;
