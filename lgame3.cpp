@@ -242,16 +242,18 @@ int main(){
 	  maxScore = score;
 	  r[0].type = 1;
 	  r[0].one = subs1;
+          r[0].two = "";
 	  rcount = 1;
 	}
 	else{
 	  if(score == maxScore){
 	    r[rcount].type = 1;
 	    r[rcount].one = subs1;
+            r[rcount].two = "";
 	    rcount++;
 	  }
 	}
-        cout<<s<<' '<<subs1<<endl;
+        // cout<<s<<' '<<subs1<<endl;
       }
       else{
         string subs3 = subs2.substr(0,tmpr[tmpc-1]);
@@ -283,7 +285,7 @@ int main(){
 	    rcount++;
 	  }
 	}
-        cout<<s<<' '<<subs1<<' '<<subs3<<endl;
+        // cout<<s<<' '<<subs1<<' '<<subs3<<endl;
       }
     }
   }
@@ -293,6 +295,7 @@ int main(){
   string lastone,lasttwo;
   int lasttype = -1;
   for(int i=0;i<rcount;i++){
+    //cout<<r[i].type<<' '<<r[i].one<<' '<<r[i].two<<endl;
     if(lasttype==r[i].type && lastone==r[i].one && lasttwo==r[i].two)
       continue;
     lasttype = r[i].type;
