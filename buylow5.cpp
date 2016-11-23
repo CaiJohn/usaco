@@ -8,11 +8,6 @@
 #define MAXN 5000
 using namespace std;
 
-struct Info{
-  int head;
-  int count;
-
-}
 
 
 int main(){
