@@ -13,7 +13,8 @@ using namespace std;
 
 int N,M;
 int cap[MAXN+1][MAXN+1]={0};
-int conn[MAXN+1][MAXN+1]={0},connc[MANX+1]={0};
+int conn[MAXN+1][MAXN+1]={0},connc[MAXN+1]={0};
+int eindex[MAXN+1][MAXN+1]={0};
 
 bool bfs(int pre[]){
   int visited[MAXN+1] = {0};
@@ -58,6 +59,7 @@ int maxflow(){
     }
     
     flow += augflow;
+    cur = N;
     while(true){
       if(cur==1)
         break;
@@ -71,6 +73,25 @@ int maxflow(){
   return flow;
 }
 
+void reach(int s, int visited[]){
+  queue<int> q;
+  q.push(s);
+  visited[s] = 1;
+  while(!q.empty()){
+    int cur = q.front();
+    q.pop();
+    for(int i=0;i<connc[cur];i++){
+      int nn = conn[cur][i];
+      if(visited[nn]==0 && cap[cur][nn]>0){
+	visited[nn] = 1;
+	q.push(nn);
+      }
+    }
+  }
+  return;
+}
+  
+
 int main(){
   ifstream fin("milk6.in");
   ofstream fout("milk6.out");
@@ -83,15 +104,17 @@ int main(){
     cap[from][to] = cost;
     conn[from][connc[from]++] = to;
     
-    index[from][to] = ++count;
+    eindex[from][to] = ++count;
   }
-
+  
   int mincost = maxflow();
+
   for(int i=1;i<=N;i++){
     for(int j=1;j<=N;j++){
-      if(index[i][j]>0){
+      if(eindex[i][j]>0){
         if(cap[i][j]==0){
           cap[i][j] = 1;
+	  cout<<eindex[i][j]<<endl;
         }
         else{
           cap[i][j] = INF;
@@ -102,14 +125,14 @@ int main(){
       }
     }
   }
-  maxflow();
+  cout<<maxflow()<<endl;
   int minIndex = MAXM+1,minfrom,minto;
   for(int i=1;i<=N;i++){
     for(int j=1;j<=N;j++){
-      if(index[i][j]>0){
+      if(eindex[i][j]>0){
         if(cap[i][j]==0){
-          if(index[i][j]>minIndex){
-            minIndex = index[i][j];
+          if(eindex[i][j]<minIndex){
+            minIndex = eindex[i][j];
             minfrom = i;
             minto = j;
           }
@@ -124,18 +147,21 @@ int main(){
       }
     }
   }
+  cout<<minfrom<<' '<<minto<<endl;
   cap[minfrom][minto] = 1;
-  minflow();
+
+  cout<<maxflow()<<endl;
+  int cut[MAXM+1] = {0};
+  reach(1,cut);
   int ans[MAXM],acount=0;
   for(int i=1;i<=N;i++){
     for(int j=1;j<=N;j++){
-      if(index[i][j]>0){
-        if(cap[i][j]==0){
-          ans[acount++] = index[i][j];
-        }
+      if(cut[i]==1 && cut[j]==0 && eindex[i][j]>0){
+	ans[acount++] = eindex[i][j];
       }
     }
   }
+  
   sort(ans,ans+acount);
   fout<<mincost<<' '<<acount<<endl;
   for(int i=0;i<acount;i++)
