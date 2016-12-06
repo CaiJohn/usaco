@@ -109,10 +109,11 @@ int main(){
 
     if(fscanf(fin,"%c",&op)!=EOF){//???
       // cout<<op<<endl;
+      // cout<<pos[id2int('9')][0]<<' '<<pos[id2int('9')][1]<<' '<<pos[id2int('9')][2]<<' '<<pos[id2int('9')][3]<<endl;
       if(op=='w'){
         fscanf(fin,"(%c,%d,%d,%d,%d)\n",&id,&x1,&y1,&x2,&y2);
         
-        if(pos[id2int(id)][0]!=pos[id2int(id)][2]){// already exists
+        if(pos[id2int(id)][0]!=pos[id2int(id)][2]){// already exists?? Not a good idea...
           int tpos = -1;
           for(int i=0;i<wcount;i++){
             if(windows[i]==id){
@@ -121,7 +122,7 @@ int main(){
             }
           }
           for(int i=tpos;i<wcount-1;i++){                
-            windows[i] = windows[i+1];
+            windows[i] = windows[i+1];// I guess windows and pos and allocated next to each other, and when windows[-1] is modified, pos is modified
           }
           wcount--;
         }
@@ -131,11 +132,14 @@ int main(){
         pos[id2int(id)][1] = y1<y2?y1:y2;
         pos[id2int(id)][2] = x2>x1?x2:x1;
         pos[id2int(id)][3] = y2>y1?y2:y1;
-        // cout<<"add new window "<<id<<" wcount "<<wcount<<endl;
-        // for(int i=0;i<wcount;i++){
-        //   cout<<windows[i];
-        // }
-        // cout<<endl;
+	// if(id=='9'){
+	//   cout<<"add new window "<<id<<" wcount "<<wcount<<endl;
+	//   for(int i=0;i<wcount;i++){
+	//     cout<<windows[i];
+	//   }	  
+	//   cout<<endl;
+	//   cout<<pos[id2int(id)][0]<<' '<<pos[id2int(id)][1]<<' '<<pos[id2int(id)][2]<<' '<<pos[id2int(id)][3]<<endl;
+	// }
       }
       else{
         fscanf(fin,"(%c)\n",&id);
@@ -190,6 +194,10 @@ int main(){
                 windows[i] = windows[i+1];
               }
               wcount--;
+	      pos[id2int(id)][0]=0;//??? but why this will modify others?
+	      pos[id2int(id)][1]=0;
+	      pos[id2int(id)][2]=0;
+	      pos[id2int(id)][3]=0;
               // cout<<"d("<<id<<")"<<endl;
               // for(int i=0;i<wcount;i++){
               //   cout<<windows[i];
@@ -209,11 +217,11 @@ int main(){
               
               int newsize = calc(w);
               double size = (pos[id2int(id)][2]-pos[id2int(id)][0])*(pos[id2int(id)][3]-pos[id2int(id)][1]);
-              if(id=='9'){
-                cout<<pos[id2int(id)][0]<<' '<<pos[id2int(id)][1]<<' '<<pos[id2int(id)][2]<<' '<<pos[id2int(id)][3]<<endl;
-              }
+              // if(id=='9'){
+              //   cout<<pos[id2int(id)][0]<<' '<<pos[id2int(id)][1]<<' '<<pos[id2int(id)][2]<<' '<<pos[id2int(id)][3]<<endl;
+              // }
               double ratio = round(newsize/size*100000.0)/1000.0;
-              cout<<"s("<<id<<") "<<ratio<<' '<<size<<endl;
+              // cout<<"s("<<id<<") "<<ratio<<' '<<size<<endl;
               fout<<fixed<<setprecision(3)<<ratio<<endl;//?????
               // cout<<ratio<<endl;
             }
