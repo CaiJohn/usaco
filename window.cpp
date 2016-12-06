@@ -106,7 +106,7 @@ int main(){
   while(true){
     char op,id;
     int x1,y1,x2,y2;
-    //cout<<"here"<<endl;
+
     if(fscanf(fin,"%c",&op)!=EOF){//???
       // cout<<op<<endl;
       if(op=='w'){
@@ -206,9 +206,14 @@ int main(){
                   w = cover(w,pos[id2int(windows[i])][0],pos[id2int(windows[i])][1],pos[id2int(windows[i])][2],pos[id2int(windows[i])][3]);
                 }
               }
-              // cout<<"s("<<id<<")"<<endl;
+              
               int newsize = calc(w);
-              double ratio = round((newsize/(double)((pos[id2int(id)][2]-pos[id2int(id)][0])*(pos[id2int(id)][3]-pos[id2int(id)][1])))*100000)/1000.0;
+              double size = (pos[id2int(id)][2]-pos[id2int(id)][0])*(pos[id2int(id)][3]-pos[id2int(id)][1]);
+              if(id=='9'){
+                cout<<pos[id2int(id)][0]<<' '<<pos[id2int(id)][1]<<' '<<pos[id2int(id)][2]<<' '<<pos[id2int(id)][3]<<endl;
+              }
+              double ratio = round(newsize/size*100000.0)/1000.0;
+              cout<<"s("<<id<<") "<<ratio<<' '<<size<<endl;
               fout<<fixed<<setprecision(3)<<ratio<<endl;//?????
               // cout<<ratio<<endl;
             }
