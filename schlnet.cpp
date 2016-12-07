@@ -5,37 +5,81 @@
 */
 #include<iostream>
 #include<fstream>
+#include<cstring>
 #define MAXN 100
+using namespace std;
+int N,edge[MAXN+1][MAXN+1]={0};
 
-
-int tarjan(int low[], int visited[]){
-  low[v] = index;
-  visited[v] = index;
-  index++;
-  for(int i=1;i<=N;i++){
-    if(visited[i]==0 && edge[v][i]==1){
-      tarjan(low,visited);
-      if(low[v]>low[i])
-        low[v] = low[i];
+struct SCC{
+  int s[MAXN+1];
+  int sp;
+  bool instack[MAXN+1];
+  int low[MAXN+1];
+  int visited[MAXN+1];
+  int index;
+  int scc[MAXN+1];
+  int ccount;
+  SCC(){
+    index = 0;
+    sp = 0;
+    ccount = 0;
+    memset(instack,false,MAXN+1);
+    memset(visited,0,MAXN+1);
+  }
+  
+  void tarjan(int v){
+    // cout<<"tarjan "<<v<<' '<<index<<' '<<ccount<<endl;
+    low[v] = visited[v] = ++index;
+    s[sp++] = v;
+    instack[v] = true;
+    // cout<<"here"<<endl;
+    for(int i=1;i<=N;i++){
+      // cout<<i<<endl;
+      if(edge[v][i] == 1){
+	if(visited[i]==0){
+	  tarjan(i);
+	  if(low[v]>low[i]){
+	    // cout<<"low[v] = low[i]"<<endl;
+	    low[v] = low[i];
+	  }
+	}
+	else{
+	  if(instack[i] == true && visited[i]<low[v]){
+	    // cout<<"low[v] = visited[i]"<<endl;
+	    low[v] = visited[i];
+	  }
+	}
+      }
     }
-    else{
-      if(instack[i] == 1 && visited[i]<low[v]){
-        low[v] = visited[i];
+    // cout<<"out"<<endl;
+    if(visited[v] == low[v]){
+      while(true){
+	int tmp = s[--sp];
+	instack[tmp] = false;
+	scc[tmp] = ccount;
+	if(tmp==v)
+	  break;
+      }
+      ccount++;
+    }
+  }
+
+  void solve(){
+    for(int i=1;i<=N;i++){
+      if(visited[i]==0){
+	tarjan(i);
+	// for(int j=1;j<=N;j++){
+	//   cout<<scc[j]<<' '<<low[j]<<endl;
+	// }
       }
     }
   }
-  if(visited[v] == low[v]){
-    ccount ++;
-    while(true){
-      
-    }
-  }
-}
+};
 
 int main(){
   ifstream fin("schlnet.in");
   ofstream fout("schlnet.out");
-  int N,edge[MAXN+1][MAXN+1]={0};
+
   fin>>N;
   for(int i=1;i<=N;i++){
     int tmp;
@@ -49,31 +93,34 @@ int main(){
     }
   }
 
-  int vertex[MAXN+1]={0};
-  int V = tarjan(vertex);
-
+  SCC newscc;
+  newscc.solve();
   
   int inedge[MAXN+1]={0},outedge[MAXN+1]={0};
   for(int i=1;i<=N;i++){
     for(int j=1;j<=N;j++){
-      if(vertex[i]!=vertex[j]){
-        outedge[vertex[i]] = 1;
-        inedge[vertex[j]] = 1;
+      if(edge[i][j]==1 && newscc.scc[i]!=newscc.scc[j]){
+        outedge[newscc.scc[i]] = 1;
+        inedge[newscc.scc[j]] = 1;
       }
     }
   }
-
-  int cinzero = 0,coutzero = 0;
-  for(int i=0;i<V;i++){
+  
+  int cinzero = 0,coutzero = 0,cboth = 0;
+  for(int i=0;i<newscc.ccount;i++){
     if(inedge[i]==0){
       cinzero ++;
     }
     if(outedge[i]==0){
       coutzero ++;
     }
+    if(inedge[i]==0 && outedge[i]==0){
+      cboth ++;
+    }
   }
   fout<<cinzero<<endl;
-  fout<<cinzero*coutzero<<endl;
+  fout<<(coutzero-1)+cinzero-cboth+1<<endl;
+
   return 0;
 }
 
