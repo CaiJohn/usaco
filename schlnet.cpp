@@ -20,16 +20,19 @@ struct SCC{
   int scc[MAXN+1];
   int ccount;
   SCC(){
+    
     index = 0;
     sp = 0;
     ccount = 0;
-    memset(instack,false,MAXN+1);
-    memset(visited,0,MAXN+1);
+    memset(instack,false,sizeof(instack));//???
+    memset(visited,0,sizeof(visited));
+    
   }
   
   void tarjan(int v){
     // cout<<"tarjan "<<v<<' '<<index<<' '<<ccount<<endl;
     low[v] = visited[v] = ++index;
+    // cout<<"tarjan "<<v<<' '<<index<<' '<<ccount<<endl;
     s[sp++] = v;
     instack[v] = true;
     // cout<<"here"<<endl;
@@ -67,10 +70,8 @@ struct SCC{
   void solve(){
     for(int i=1;i<=N;i++){
       if(visited[i]==0){
+        
 	tarjan(i);
-	// for(int j=1;j<=N;j++){
-	//   cout<<scc[j]<<' '<<low[j]<<endl;
-	// }
       }
     }
   }
@@ -95,16 +96,18 @@ int main(){
 
   SCC newscc;
   newscc.solve();
-  
+  // cout<<"print"<<endl;
   int inedge[MAXN+1]={0},outedge[MAXN+1]={0};
   for(int i=1;i<=N;i++){
     for(int j=1;j<=N;j++){
       if(edge[i][j]==1 && newscc.scc[i]!=newscc.scc[j]){
+        // cout<<newscc.scc[i]<<' '<<newscc.scc[j]<<endl;
         outedge[newscc.scc[i]] = 1;
         inedge[newscc.scc[j]] = 1;
       }
     }
   }
+  
   
   int cinzero = 0,coutzero = 0,cboth = 0;
   for(int i=0;i<newscc.ccount;i++){
@@ -119,7 +122,10 @@ int main(){
     }
   }
   fout<<cinzero<<endl;
-  fout<<(coutzero-1)+cinzero-cboth+1<<endl;
+  if(cboth==1 && coutzero == 1 && cinzero==1)
+    fout<<0<<endl;
+  else
+    fout<<(cinzero>coutzero?cinzero:coutzero)<<endl;
 
   return 0;
 }
