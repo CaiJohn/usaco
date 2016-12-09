@@ -79,7 +79,7 @@ Node match(int pos, int num){
       for(int i=0;i<27;i++){
         cout<<"matching "<<i<<endl;
 	for(int m=0;m<20;m++){// the missing line
-          cout<<"missing "<<m<<endl;
+          // cout<<"missing "<<m<<endl;
           sum = 0;
 	  for(int j=0;j<m && sum<minC ;j++){
 	    sum += matchOne[i][pos][j];
@@ -87,7 +87,7 @@ Node match(int pos, int num){
 	  for(int j=m+1;j<20 && sum<minC ;j++){
 	    sum += matchOne[i][pos-1][j];
 	  }
-          cout<<sum<<endl;
+          // cout<<sum<<endl;
 	  if(minC>sum){
 	    minC = sum;
             mins = i;
@@ -97,8 +97,9 @@ Node match(int pos, int num){
     }
     else{
       for(int i=0;i<27;i++){
-        sum = 0;
 	for(int m=0;m<20;m++){
+          cout<<i<<" duplicate "<<m<<endl;
+          sum = 0;
 	  for(int j=0;j<m && sum<minC ;j++){
 	    sum += matchOne[i][pos][j];
 	  }
@@ -108,6 +109,7 @@ Node match(int pos, int num){
 	  for(int j=m+2;j<20 && sum<minC ;j++){
 	    sum += matchOne[i][pos+1][j];
 	  }
+          cout<<sum<<endl;
 	  if(minC>sum){
 	    minC = sum;
             mins = i;
@@ -116,7 +118,7 @@ Node match(int pos, int num){
       }
     }
   }
-  cout<<"match end: "<<minC<<' '<<mins<<endl;
+  cout<<"match end: "<<minC<<' '<<(char)('a'+mins-1)<<' '<<mins<<endl;
   string s;
   if(mins==0)
     s = " ";
